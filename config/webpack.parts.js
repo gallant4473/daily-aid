@@ -105,7 +105,7 @@ exports.devServer = ({ host, port } = {}) => ({
     stats: 'errors-only',
     host, // Defaults to `localhost`
     port, // Defaults to 8080
-    open: true,
+    open: false,
     overlay: true,
     historyApiFallback: true
   }
@@ -206,7 +206,9 @@ exports.setFreeVariable = (value) => {
     env[key] = JSON.stringify(value[key])
   }
   return {
-    plugins: [new webpack.DefinePlugin(env)]
+    plugins: [new webpack.DefinePlugin({
+      'process.env': env
+    })]
   }
 }
 

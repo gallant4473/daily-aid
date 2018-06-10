@@ -3,19 +3,19 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import 'react-hot-loader/patch'
 
-import Main from './container/Main'
+import RootComponent from './root'
 import '../assets/styles/index.scss'
 
 const render = (Component) => {
   ReactDOM.render(<AppContainer><Component /></AppContainer>, document.getElementById('app'))
 }
 
-render(Main)
+render(RootComponent)
 
 if (module.hot) {
   module
     .hot
-    .accept('./container/Main', () => {
-      render(Main)
+    .accept('./root', () => {
+      render(RootComponent)
     })
 }

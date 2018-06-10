@@ -1,22 +1,50 @@
 {
   "DEVELOPMENT": {
     "app": {
-      "title": "App development"
+      "app": "Daily aid",
+      "type": "development",
+      "title": "Daily aid development",
+      "domain": "",
+      "mainRoute": "/",
+      "redirectRoute": "/dashboard",
+      "baseUrl": "http://192.168.0.8:3000/",
+      "apiUrl": "http://localhost:3000/api/v0/"
     }
   },
   "PRODUCTION": {
     "app": {
-      "title": "App"
+      "app": "Daily aid",
+      "type": "production",
+      "title": "Daily aid",
+      "domain": "",
+      "mainRoute": "/",
+      "redirectRoute": "/dashboard",
+      "baseUrl": "http://localhost:3000/",
+      "apiUrl": "http://localhost:3000/api/v0/"
     }
   },
   "STAGING": {
     "app": {
-      "title": "App staging"
+      "app": "Daily aid",
+      "type": "staging",
+      "title": "Daily aid staging",
+      "domain": "",
+      "mainRoute": "/",
+      "redirectRoute": "/dashboard",
+      "baseUrl": "http://localhost:3000/",
+      "apiUrl": "http://localhost:3000/api/v0/"
     }
   },
   "QA": {
     "app": {
-      "title": "App qa"
+      "app": "Daily aid",
+      "type": "qa",
+      "title": "Daily aid qa",
+      "domain": "",
+      "mainRoute": "/",
+      "redirectRoute": "/dashboard",
+      "baseUrl": "http://localhost:3000/",
+      "apiUrl": "http://localhost:3000/api/v0/"
     }
   }
 }

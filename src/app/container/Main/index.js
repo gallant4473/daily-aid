@@ -1,36 +1,27 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Loadable from 'react-loadable'
+import { Loader } from '../../components'
 
-const HomePage = Loadable({
-  loader: () => import('../Home'),
+const DashboardPage = Loadable({
+  loader: () => import('../../components/Dashboard'),
   loading() {
-    return <div>Loading...</div>
+    return <Loader loading error={false} />
   }
 })
 
-const AboutPage = Loadable({
-  loader: () => import('../About'),
+const LoginPage = Loadable({
+  loader: () => import('../Login'),
   loading() {
-    return <div>Loading...</div>
-  }
-})
-
-const ContactPage = Loadable({
-  loader: () => import('../Contact'),
-  loading() {
-    return <div>Loading...</div>
+    return <Loader loading error={false} />
   }
 })
 
 const Main = () => (
-  <Router>
-    <Switch>
-      <Route exact path='/' component={HomePage} />
-      <Route exact path='/about' component={AboutPage} />
-      <Route exact path='/contact' component={ContactPage} />
-    </Switch>
-  </Router>
+  <Switch>
+    <Route exact path='/' component={LoginPage} />
+    <Route exact path='/dashboard' component={DashboardPage} />
+  </Switch>
 )
 
 export default Main

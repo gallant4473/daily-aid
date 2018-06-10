@@ -1,10 +1,10 @@
 {
   "name": "daily-aid",
   "version": "1.0.0",
-  "description": "",
+  "description": "Daily aid",
   "main": "index.js",
   "scripts": {
-    "dev:web": "webpack-dev-server --mode=development --env.TYPE=DEVELOPMENT --env.APP=app",
+    "dev:app": "webpack-dev-server --host=0.0.0.0 --mode=development --env.TYPE=DEVELOPMENT --env.APP=app",
     "build:app": "webpack --mode=production --env.TYPE=PRODUCTION --env.APP=app",
     "build:appStaging": "webpack --mode=production --env.TYPE=STAGING --env.APP=app",
     "build:appQa": "webpack --mode=production --env.TYPE=QA --env.APP=app",
@@ -12,14 +12,28 @@
     "lint": "eslint ./src/**/**.js",
     "precommit": "npm run lint && npm run sass-lint"
   },
-  "keywords": [],
+  "keywords": [
+    "Webpack 4",
+    "Support multi app"
+  ],
+  "license": "ISC",
   "dependencies": {
+    "bootstrap": "^4.1.1",
+    "classnames": "^2.2.6",
     "prop-types": "^15.6.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "query-string": "^6.1.0",
+    "react": "^16.4.0",
+    "react-cookies": "^0.1.0",
+    "react-dom": "^16.4.0",
     "react-loadable": "^5.3.1",
+    "react-notification-system": "^0.2.17",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "reusable-react-components": "^0.0.5"
+    "reactstrap": "^6.1.0",
+    "redux": "^4.0.0",
+    "redux-observable": "^0.18.0",
+    "reusable-react-components": "^1.0.0",
+    "rxjs": "5.5.6"
   },
   "devDependencies": {
     "autoprefix": "^1.0.1",

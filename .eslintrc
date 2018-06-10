@@ -7,6 +7,9 @@
       "jsx": true
     }
   },
+  "globals": {
+    "sso": true
+  },
   "env": {
     "browser": true,
     "node": true,
@@ -22,6 +25,10 @@
     "jsx-quotes": "off",
     "react/no-array-index-key": "off",
     "jsx-a11y/label-has-for": "off",
-    "no-nested-ternary": "off"
+    "no-nested-ternary": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "class-methods-use-this": "off",
+    "no-console": "off",
+    "react/prop-types": "off"
   }
 }
