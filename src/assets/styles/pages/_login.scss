@@ -7,7 +7,7 @@
   .login-container {
     min-height: 70vh;
     width: 100%;
-    max-width: 330px;
+    max-width: 360px;
     background: #fff;
     box-shadow: 0 0 4px rgba(0,0,0,.31);
     padding: 15px;
@@ -54,7 +54,7 @@
     border-top-right-radius: 0;
   }
   .reusable-dropdown, .reusable-ms-dropdown {
-    width: 300px;
+    width: 330px;
     &-box {
       position: relative;
       &-default {

@@ -1,4 +1,11 @@
-import { LOGIN_SUCCESS, LOGOUT_SUCCESS, SIGNUP_SUCCESS } from '../Login/logic'
+import {
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  SIGNUP_SUCCESS,
+  FORGOT_PASSWORD_SUCCESS,
+  CHECK_RESET_FAILURE,
+  RESET_PASSWORD_SUCCESS
+} from '../Login/logic'
 
 export const ERROR = 'ERROR'
 export const STATUS_CANCEL = 'STATUS_CANCEL'
@@ -40,11 +47,35 @@ export function statusReducer (state = INITAL_STATE, action) {
       const obj = setErrorStatus(action.payload.status)
       return obj
     }
+    case CHECK_RESET_FAILURE: {
+      return {
+        message: 'The link is expired, please retry forgot password',
+        status: 'error',
+        type: 'checkReset',
+        title: 'Error'
+      }
+    }
     case LOGIN_SUCCESS: {
       return {
         message: 'You are successfully logged in',
         status: 'success',
         type: 'login',
+        title: 'Success'
+      }
+    }
+    case RESET_PASSWORD_SUCCESS: {
+      return {
+        message: 'Reset password successfull',
+        status: 'success',
+        type: 'resetPassword',
+        title: 'Success'
+      }
+    }
+    case FORGOT_PASSWORD_SUCCESS: {
+      return {
+        message: 'Please check your email',
+        status: 'success',
+        type: 'forgot',
         title: 'Success'
       }
     }
