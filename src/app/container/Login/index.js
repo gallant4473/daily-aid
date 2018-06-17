@@ -7,9 +7,9 @@ import { getCookie } from '../../utils'
 import { Loader } from '../../components'
 
 const Condominium = [
-  'OTC',
-  'KT',
-  'LG'
+  'OUG',
+  'Endah Villa',
+  'Koi Tropika'
 ]
 
 class Login extends Component {
