@@ -17,7 +17,6 @@ const INITAL_STATE = {
 }
 
 function setErrorStatus (error) {
-  console.log(error)
   const obj = {
     message: error.response.message || 'Oops! There has been an issue. Re-try in some time.',
     status: 'error',

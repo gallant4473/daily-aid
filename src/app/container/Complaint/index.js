@@ -85,6 +85,10 @@ class Complaint extends Component {
                 </div>
               )}
               <div className='d-flex align-items-center' >
+                <div className='font-weight-bold' style={{ width: 150 }}>Name:</div>
+                <div >{data.data.name}</div>
+              </div>
+              <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Title:</div>
                 <div >{data.data.title}</div>
               </div>
