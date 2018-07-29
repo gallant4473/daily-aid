@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getUserAction, approveAction, activateAction } from './logic'
 import { Loader, NoDataFound } from '../../components'
+import Complaint from '../Complaint'
 
 class Admin extends Component {
   constructor (props) {
@@ -92,10 +93,8 @@ class Admin extends Component {
       )
     }
     return (
-      <div className='card' style={{ minHeight: '70vh', marginTop: 10 }} >
-        <div className='card-body d-flex align-items-center justify-content-center' >
-          <h2>Actions</h2>
-        </div>
+      <div className='card' style={{ minHeight: '70vh', marginTop: 10, padding: 10 }} >
+        <Complaint />
       </div>
     )
   }
@@ -110,7 +109,7 @@ class Admin extends Component {
                 <a role='presentation' onClick={() => this.toggle(1)} className={this.state.activeTab === 1 ? 'nav-link active' : 'nav-link'}>Users</a>
               </li>
               <li className='nav-item'>
-                <a role='presentation' onClick={() => this.toggle(2)} className={this.state.activeTab === 2 ? 'nav-link active' : 'nav-link'}>Actions</a>
+                <a role='presentation' onClick={() => this.toggle(2)} className={this.state.activeTab === 2 ? 'nav-link active' : 'nav-link'}>Complaints</a>
               </li>
             </ul>
             {this.renderContent()}

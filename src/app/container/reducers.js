@@ -3,6 +3,13 @@ import { authReducer, signupReducer, forgotPassowrdReducer, checkResetReducer, r
 import { statusReducer } from './Status/logic'
 import { modalReducer } from './Modal/logic'
 import { getUserReducer, approveReducer, activateReducer } from './Admin/logic'
+import {
+  addComplaintReducer,
+  getAllComplaintReducer,
+  getComplaintReducer,
+  deleteComplaintReducer,
+  editComplaintReducer
+} from './Complaint/logic'
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,7 +21,12 @@ const rootReducer = combineReducers({
   resetPassword: resetPasswordReducer,
   getUser: getUserReducer,
   approve: approveReducer,
-  activate: activateReducer
+  activate: activateReducer,
+  addComplaint: addComplaintReducer,
+  getAllComplaint: getAllComplaintReducer,
+  getComplaint: getComplaintReducer,
+  deleteComplaint: deleteComplaintReducer,
+  editComplaint: editComplaintReducer
 })
 
 export default rootReducer

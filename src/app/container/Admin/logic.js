@@ -72,7 +72,7 @@ const activateSuccess = payload => ({
 // get user epic
 export const getUserEpic = action$ => action$
   .ofType(GET_USER)
-  .mergeMap(action => staticAjax(apiCall(`${process.env.baseUrl}api/v0/dashboard/user_list`, 'GET', true, {}, action.payload))
+  .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}users/user_list`, 'GET', true, {}, action.payload))
     .map(response => getUserSuccess(response))
     .catch(error => Observable.of({
       type: GET_USER_FAILURE,
@@ -84,7 +84,7 @@ export const getUserEpic = action$ => action$
 
 export const approveEpic = action$ => action$
   .ofType(APPROVE)
-  .mergeMap(action => staticAjax(apiCall(`${process.env.baseUrl}api/v0/dashboard/approve`, 'POST', true, action.payload.data))
+  .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}users/approve`, 'POST', true, action.payload.data))
     .map(response => approveSuccess(response))
     .catch(error => Observable.of({
       type: APPROVE_FAILURE,
@@ -96,7 +96,7 @@ export const approveEpic = action$ => action$
 
 export const activateEpic = action$ => action$
   .ofType(ACTIVATE)
-  .mergeMap(action => staticAjax(apiCall(`${process.env.baseUrl}api/v0/dashboard/activate`, 'POST', true, action.payload.data))
+  .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}users/activate`, 'POST', true, action.payload.data))
     .map(response => activateSuccess(response))
     .catch(error => Observable.of({
       type: ACTIVATE_FAILURE,

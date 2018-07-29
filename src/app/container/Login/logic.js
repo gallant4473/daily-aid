@@ -113,7 +113,7 @@ const resetPasswordSuccess = payload => ({
 // Reset Passowrd epic
 export const resetPasswordEpic = action$ => action$
   .ofType(RESET_PASSWORD)
-  .mergeMap(action => staticAjax(apiCall(`${process.env.baseUrl}api/v0/auth/reset_password?id=${action.payload.id}`, 'POST', false, action.payload.data))
+  .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}auth/reset_password?id=${action.payload.id}`, 'POST', false, action.payload.data))
     .map(response => resetPasswordSuccess(response))
     .catch(error => Observable.of({
       type: RESET_PASSWORD_FAILURE,
@@ -126,7 +126,7 @@ export const resetPasswordEpic = action$ => action$
 // Check Reset epic
 export const checkResetEpic = action$ => action$
   .ofType(CHECK_RESET)
-  .mergeMap(action => staticAjax(apiCall(`${process.env.baseUrl}api/v0/auth/reset_password?${action.payload}`, 'GET', false))
+  .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}auth/reset_password?${action.payload}`, 'GET', false))
     .map(response => checkResetSuccess(response))
     .catch(error => Observable.of({
       type: CHECK_RESET_FAILURE,
@@ -136,7 +136,7 @@ export const checkResetEpic = action$ => action$
 // Forgot Passowrd epic
 export const forgotPasswordEpic = action$ => action$
   .ofType(FORGOT_PASSWORD)
-  .mergeMap(action => staticAjax(apiCall(`${process.env.baseUrl}api/v0/auth/forgot_password`, 'POST', false, action.payload))
+  .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}auth/forgot_password`, 'POST', false, action.payload))
     .map(response => forgotPasswordSuccess(response))
     .catch(error => Observable.of({
       type: FORGOT_PASSWORD_FAILURE,
@@ -149,7 +149,7 @@ export const forgotPasswordEpic = action$ => action$
 // Signup epic
 export const signupEpic = action$ => action$
   .ofType(SIGNUP)
-  .mergeMap(action => staticAjax(apiCall(`${process.env.baseUrl}api/v0/auth/register`, 'POST', false, action.payload))
+  .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}auth/register`, 'POST', false, action.payload))
     .map(response => signupSuccess(response))
     .catch(error => Observable.of({
       type: SIGNUP_FAILURE,
@@ -162,7 +162,7 @@ export const signupEpic = action$ => action$
 // Login epic
 export const loginEpic = action$ => action$
   .ofType(LOGIN)
-  .mergeMap(action => staticAjax(apiCall(`${process.env.baseUrl}api/v0/auth/login`, 'POST', false, action.payload))
+  .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}auth/login`, 'POST', false, action.payload))
     .map(response => loginSuccess(response))
     .catch(error => Observable.of({
       type: LOGIN_FAILURE,
@@ -175,7 +175,7 @@ export const loginEpic = action$ => action$
 // Logout epic
 export const logoutEpic = action$ => action$
   .ofType(LOGOUT)
-  .mergeMap(action => staticAjax(apiCall(`${process.env.baseUrl}api/v0/auth/logout`, 'DELETE', true, action.payload))
+  .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}auth/logout`, 'DELETE', true, action.payload))
     .map(response => logoutSuccess(response))
     .catch(error => Observable.of({
       type: LOGOUT_FAILURE,
@@ -204,6 +204,7 @@ export function authReducer (state = INITIAL_STATE, action) {
       setCookie(action.payload.response.data.is_admin, 'permissions')
       setCookie(bearer, 'accessToken')
       setCookie(userName, 'userName')
+      setCookie(JSON.stringify(action.payload.response.data), 'data')
       return {
         ...state,
         data: action.payload.response,

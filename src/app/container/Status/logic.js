@@ -16,20 +16,21 @@ const INITAL_STATE = {
   title: ''
 }
 
-function setErrorStatus (status) {
+function setErrorStatus (error) {
+  console.log(error)
   const obj = {
-    message: 'Oops! There has been an issue. Re-try in some time.',
+    message: error.response.message || 'Oops! There has been an issue. Re-try in some time.',
     status: 'error',
     type: '400',
     title: 'Error'
   }
-  switch (status) {
+  switch (error.status) {
     case 401:
-      obj.message = 'Your current session has expired.'
+      obj.message = error.response.message || 'Your current session has expired.'
       obj.type = '401'
       break
     case 403:
-      obj.message = "You don't have required permissions, Please contact our adimin"
+      obj.message = error.response.message || "You don't have required permissions, Please contact our adimin"
       obj.type = '403'
       break
     default:
@@ -44,7 +45,7 @@ export function statusReducer (state = INITAL_STATE, action) {
       return INITAL_STATE
     }
     case ERROR: {
-      const obj = setErrorStatus(action.payload.status)
+      const obj = setErrorStatus(action.payload)
       return obj
     }
     case CHECK_RESET_FAILURE: {
