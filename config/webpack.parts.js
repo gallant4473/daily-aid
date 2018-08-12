@@ -16,7 +16,6 @@ exports.page = ({
   output,
   chunks
 } = {}) => {
-  console.log(title, path, entry, chunks)
   return ({
     entry,
     plugins: [

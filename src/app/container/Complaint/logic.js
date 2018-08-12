@@ -328,7 +328,6 @@ export function getAllComplaintReducer (state = INITIAL_NEW_STATE, action) {
       }
     }
     case GET_ALL_COMPLAINT_FAILURE: {
-      console.log(action.payload.response)
       return {
         ...state,
         data: [],
