@@ -1,7 +1,7 @@
 import { combineEpics } from 'redux-observable'
 
 import { loginEpic, logoutEpic, signupEpic, forgotPasswordEpic, checkResetEpic, resetPasswordEpic } from './Login/logic'
-import { approveEpic, activateEpic, getUserEpic } from './Admin/logic'
+import { approveEpic, activateEpic, getUserEpic } from './User/logic'
 import { getAllComplaintEpic, getComplaintEpic, deleteComplaintEpic, editComplaintEpic, addComplaintEpic } from './Complaint/logic'
 
 const rootEpic = combineEpics(

@@ -29,7 +29,7 @@
 .overlay {
   position: relative;
   &:after {
-      content: "";
+      content: '';
       position: fixed;
       top: 60px;
       bottom: 0;

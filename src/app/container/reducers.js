@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { authReducer, signupReducer, forgotPassowrdReducer, checkResetReducer, resetPasswordReducer } from './Login/logic'
 import { statusReducer } from './Status/logic'
 import { modalReducer } from './Modal/logic'
-import { getUserReducer, approveReducer, activateReducer } from './Admin/logic'
+import { getUserReducer, approveReducer, activateReducer } from './User/logic'
 import {
   addComplaintReducer,
   getAllComplaintReducer,
