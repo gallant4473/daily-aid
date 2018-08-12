@@ -1,52 +1,39 @@
-// import React from 'react'
-// import { withRouter } from 'react-router-dom'
-// import { Navbar, NavbarBrand } from 'reactstrap'
-
-// const Header = (props) => {
-//   const renderHeader = props.location.pathname !== '/' ? (
-
-//   ) : null
-//   return (
-//     <div>
-//       {renderHeader}
-//     </div>
-//   )
-// }
-
-// export default withRouter(Header)
-
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Navbar, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarToggler } from 'reactstrap'
-import { logoutAction } from '../Login/logic'
+import { Navbar, NavbarBrand, Nav, NavItem } from 'reactstrap'
+import { drawerAction } from '../Drawer/logic'
 
 class Header extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      isOpen: false
-    }
-    this.toggle = this.toggle.bind(this)
+    this.openDrawer = this.openDrawer.bind(this)
   }
-  toggle () {
-    this.setState({
-      isOpen: !this.state.isOpen
-    })
+  openDrawer () {
+    if (this.props.drawer.open) {
+      this.props.drawerAction({
+        open: false,
+        type: ''
+      })
+    } else {
+      this.props.drawerAction({
+        type: 'notification',
+        open: true
+      })
+    }
   }
   render () {
     if (this.props.location.pathname !== '/') {
       return (
-        <Navbar className='navbar-light header-layout' expand='md'>
+        <Navbar className='navbar-dark bg-primary header-layout' expand='md'>
           <NavbarBrand className='mr-auto'>DAILY AID</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className='ml-auto' navbar>
-              <NavItem>
-                <NavLink onClick={() => this.props.logoutAction({})} >Logout</NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
+          <Nav className='ml-auto' navbar>
+            <NavItem>
+              <button onClick={this.openDrawer} type='button' className='drawer-button drawer-icon-open'>
+                <span className='navbar-toggler-icon' />
+              </button>
+            </NavItem>
+          </Nav>
         </Navbar>
       )
     }
@@ -54,4 +41,8 @@ class Header extends Component {
   }
 }
 
-export default withRouter(connect(null, { logoutAction })(Header))
+const mapStateToProps = state => ({
+  drawer: state.drawer
+})
+
+export default withRouter(connect(mapStateToProps, { drawerAction })(Header))

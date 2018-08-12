@@ -10,6 +10,7 @@ import {
   deleteComplaintReducer,
   editComplaintReducer
 } from './Complaint/logic'
+import { drawerReducer } from './Drawer/logic'
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   getAllComplaint: getAllComplaintReducer,
   getComplaint: getComplaintReducer,
   deleteComplaint: deleteComplaintReducer,
-  editComplaint: editComplaintReducer
+  editComplaint: editComplaintReducer,
+  drawer: drawerReducer
 })
 
 export default rootReducer

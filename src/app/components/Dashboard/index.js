@@ -1,12 +1,12 @@
 import React from 'react'
 import { getCookie } from '../../utils'
-import Admin from '../../container/Admin'
+import Announcements from '../../container/Announcements'
 import User from '../../container/User'
 
 const Dashboard = () => {
   if (getCookie('permissions') === 'true') {
     return (
-      <Admin />
+      <Announcements />
     )
   }
   return (

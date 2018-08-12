@@ -132,16 +132,23 @@ class Complaint extends Component {
   }
   render () {
     return (
-      <Loader loading={this.props.getAll.loading} error={this.props.getAll.error} >
-        {getCookie('permissions') === 'false' && (
-          <div className='d-flex align-items-center justify-content-end' style={{ marginBottom: 10 }} >
-            <button onClick={() => this.openModal(false)} type='button' className='btn btn-primary btn-sm'>Add Complaint</button>
+      <div className='container-fluid' style={{ marginTop: 20, marginBottom: 20 }} >
+        <div className='card' style={{ minHeight: 'calc(100vh - 100px)' }} >
+          <div className='card-header'>Complaints</div>
+          <div className='card-body'>
+            <Loader loading={this.props.getAll.loading} error={this.props.getAll.error} >
+              {getCookie('permissions') === 'false' && (
+                <div className='d-flex align-items-center justify-content-end' style={{ marginBottom: 10 }} >
+                  <button onClick={() => this.openModal(false)} type='button' className='btn btn-primary btn-sm'>Add Complaint</button>
+                </div>
+              )}
+              <ul className='list-group'>
+                {this.renderList()}
+              </ul>
+            </Loader>
           </div>
-        )}
-        <ul className='list-group'>
-          {this.renderList()}
-        </ul>
-      </Loader>
+        </div>
+      </div>
     )
   }
 }
