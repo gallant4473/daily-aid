@@ -3,6 +3,7 @@ import { authReducer, signupReducer, forgotPassowrdReducer, checkResetReducer, r
 import { statusReducer } from './Status/logic'
 import { modalReducer } from './Modal/logic'
 import { getUserReducer, approveReducer, activateReducer } from './Admin/logic'
+import { drawerReducer } from './Drawer/logic'
 import {
   addComplaintReducer,
   getAllComplaintReducer,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   getAllComplaint: getAllComplaintReducer,
   getComplaint: getComplaintReducer,
   deleteComplaint: deleteComplaintReducer,
-  editComplaint: editComplaintReducer
+  editComplaint: editComplaintReducer,
+  drawer: drawerReducer
 })
 
 export default rootReducer
