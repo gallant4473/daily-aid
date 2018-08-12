@@ -2,7 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const NoDataFound = props => (
-  <div style={{ height: props.height }} >{props.message || 'No Data Found'}</div>
+  <div
+    style={{
+      height: props.height, display: 'flex', alignItems: 'center', justifyContent: 'center'
+    }}
+  >
+    {props.message || 'No Data Found'}
+  </div>
 )
 
 NoDataFound.propTypes = {
