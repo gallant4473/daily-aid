@@ -198,6 +198,7 @@ export function authReducer (state = INITIAL_STATE, action) {
       }
     }
     case LOGIN_SUCCESS: {
+      console.log(action.payload.response)
       const userName = `${action.payload.response.data.user_name}`
       const bearer = `Bearer ${action.payload.response.data.access_token}`
       setCookie(action.payload.response.data.is_admin, 'permissions')
