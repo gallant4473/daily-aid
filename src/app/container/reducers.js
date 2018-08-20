@@ -11,6 +11,7 @@ import {
   editComplaintReducer
 } from './Complaint/logic'
 import { drawerReducer } from './Drawer/logic'
+import { getAllAnnouncementReducer, getAnnouncementReducer, editAnnouncementReducer, deleteAnnouncementReducer, addAnnouncementReducer } from './Announcements/logic'
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -28,7 +29,12 @@ const rootReducer = combineReducers({
   getComplaint: getComplaintReducer,
   deleteComplaint: deleteComplaintReducer,
   editComplaint: editComplaintReducer,
-  drawer: drawerReducer
+  drawer: drawerReducer,
+  getAllAnnouncement: getAllAnnouncementReducer,
+  getAnnouncement: getAnnouncementReducer,
+  editAnnouncement: editAnnouncementReducer,
+  deleteAnnouncement: deleteAnnouncementReducer,
+  addAnnouncement: addAnnouncementReducer
 })
 
 export default rootReducer

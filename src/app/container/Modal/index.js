@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { modalCloseAction } from '../Modal/logic'
 import { Premium } from '../../components'
 import AddComplaint from '../AddComplaint'
+import AddAnnouncement from '../AddAnnouncement'
 
 class ModalComponent extends Component {
   renderType () {
@@ -12,6 +13,8 @@ class ModalComponent extends Component {
       return <Premium />
     } else if (this.props.modal.type === 'complaint') {
       return <AddComplaint data={this.props.modal.data} />
+    } else if (this.props.modal.type === 'announcement') {
+      return <AddAnnouncement data={this.props.modal.data} />
     }
     return null
   }
