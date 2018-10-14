@@ -1,15 +1,20 @@
 import React, { Component, Fragment } from 'react'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { connect } from 'react-redux'
-import { getAllComplaintAction, getComplaintAction } from './logic'
+import { getAllComplaintAction, getComplaintAction, editComplaintAction } from './logic'
 import { modalAction } from '../Modal/logic'
 import { getCookie } from '../../utils'
 import { Loader } from '../../components'
+
+const STATUS = ['Open', 'Close', 'Withdrawn']
+const PROGRESS = ['Accepted', 'Rejected', 'Pending', 'Resolved', 'In Progress', 'Withdrawn']
 
 class Complaint extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      open: null
+      open: null,
+      openDropdown: false
     }
     this.toggle = this.toggle.bind(this)
     this.openModal = this.openModal.bind(this)
@@ -21,11 +26,42 @@ class Complaint extends Component {
     })
   }
   componentWillReceiveProps (nextProps) {
-    if (nextProps.getAll.flag !== this.props.getAll.flag && nextProps.getAll.flag) {
+    if (nextProps.getAll.data !== this.props.getAll.data && nextProps.getAll.data.length) {
+      if (this.state.open) {
+        this.props.getComplaintAction({
+          id: nextProps.getAll.data[this.state.open].complaint_id
+        })
+      }
+    }
+    if (nextProps.edit.flag !== this.props.edit.flag && nextProps.edit.flag) {
+      this.props.getComplaintAction({
+        id: nextProps.getAll.data[this.state.open].complaint_id
+      })
+    }
+    if (nextProps.addComplaint.flag !== this.props.addComplaint.flag && nextProps.addComplaint.flag) {
       this.setState({
         open: null
       })
     }
+  }
+  onStatusChange (d, status, key) {
+    const data = JSON.parse(JSON.stringify(d))
+    this.props.editComplaintAction({
+      data: {
+        title: data.title,
+        location: {
+          common_area: data.location.commonArea,
+          apartment: data.location.apartment,
+          facilities: data.location.facilities
+        },
+        details: data.details,
+        name: data.name,
+        contact_number: data.number,
+        email: data.email,
+        [key]: status
+      },
+      id: data.complaint_id
+    })
   }
   openModal (status) {
     if (status) {
@@ -49,7 +85,8 @@ class Complaint extends Component {
   toggle (i, item) {
     if (i === this.state.open) {
       this.setState({
-        open: null
+        open: null,
+        openDropdown: false
       })
     } else {
       this.setState({
@@ -60,6 +97,50 @@ class Complaint extends Component {
         })
       })
     }
+  }
+  renderProgress () {
+    const data = this.props.get
+    if (getCookie('permissions') === 'false') {
+      return <div className='custom-spacing' >{data.data.status_by_admin}</div>
+    }
+    return (
+      <Dropdown size="sm" isOpen={this.state.openDropdown} toggle={() => this.setState({ openDropdown: !this.state.openDropdown })}>
+        <DropdownToggle nav className="nav-link" caret>
+          {data.data.status_by_admin}
+        </DropdownToggle>
+        <DropdownMenu>
+          {PROGRESS.map((d, j) => (
+            <Fragment key={j} >
+              <DropdownItem onClick={() => this.onStatusChange(data.data, d, 'status_by_admin')} className='hand' >{d}</DropdownItem>
+              {j !== PROGRESS.length - 1 && <DropdownItem divider />}
+            </Fragment>
+          ))}
+        </DropdownMenu>
+      </Dropdown>
+    )
+  }
+  renderStatus () {
+    const data = this.props.get
+    if (getCookie('permissions') === 'false') {
+      return (
+        <Dropdown size="sm" isOpen={this.state.openDropdown} toggle={() => this.setState({ openDropdown: !this.state.openDropdown })}>
+          <DropdownToggle nav className="nav-link" caret>
+            {data.data.status}
+          </DropdownToggle>
+          <DropdownMenu>
+            {STATUS.map((d, j) => (
+              <Fragment key={j} >
+                <DropdownItem onClick={() => this.onStatusChange(data.data, d, 'status')} className='hand' >{d}</DropdownItem>
+                {j !== STATUS.length - 1 && <DropdownItem divider />}
+              </Fragment>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
+      )
+    }
+    return (
+      <div className='custom-spacing' >{data.data.status}</div>
+    )
   }
   renderList () {
     const data = this.props.get
@@ -74,11 +155,11 @@ class Complaint extends Component {
       <Fragment key={i} >
         <li role='presentation' onClick={() => this.toggle(i, item)} className='hand list-group-item d-flex justify-content-between align-items-center'>
           {item.title}
-          <span className='badge badge-info badge-pill'>Complaint status: {item.status}</span>
+          {getCookie('permissions') === 'false' ? <span className='badge badge-info badge-pill'>Progress: {item.status_by_admin}</span> : <span className='badge badge-info badge-pill'>Complaint status: {item.status}</span>}
         </li>
         {this.state.open === i && (
           <li className='list-group-item bg-light' style={{ position: 'relative', minHeight: 200 }} >
-            <Loader loading={data.loading} error={data.error} height={200} >
+            <Loader loading={data.loading} error={data.error} height={440} >
               {getCookie('permissions') === 'false' && (
                 <div className='d-flex align-items-center justify-content-end' >
                   <button onClick={() => this.openModal(true)} type='button' className='btn btn-primary btn-sm'>Edit</button>
@@ -86,43 +167,43 @@ class Complaint extends Component {
               )}
               <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Name:</div>
-                <div >{data.data.name}</div>
+                <div className='custom-spacing' >{data.data.name}</div>
               </div>
               <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Title:</div>
-                <div >{data.data.title}</div>
+                <div className='custom-spacing' >{data.data.title}</div>
               </div>
               <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Complaint Status:</div>
-                <div >{data.data.status}</div>
+                {this.renderStatus()}
               </div>
               <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Progress:</div>
-                <div >{data.data.status_by_admin}</div>
+                {this.renderProgress()}
               </div>
               <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Email:</div>
-                <div >{data.data.email}</div>
+                <div className='custom-spacing' >{data.data.email}</div>
               </div>
               <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Contact Number:</div>
-                <div >{data.data.contact_number}</div>
+                <div className='custom-spacing' >{data.data.contact_number}</div>
               </div>
               <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Commom Area:</div>
-                {data.data.location && <div >{data.data.location.common_area}</div>}
+                {data.data.location && <div className='custom-spacing' >{data.data.location.common_area}</div>}
               </div>
               <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Apartment:</div>
-                {data.data.location && <div >{data.data.location.apartment}</div>}
+                {data.data.location && <div className='custom-spacing' >{data.data.location.apartment}</div>}
               </div>
               <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Facilities:</div>
-                {data.data.location && <div >{data.data.location.facilities}</div>}
+                {data.data.location && <div className='custom-spacing' >{data.data.location.facilities}</div>}
               </div>
               <div className='d-flex align-items-center' >
                 <div className='font-weight-bold' style={{ width: 150 }}>Details:</div>
-                <div >{data.data.details}</div>
+                <div className='custom-spacing' >{data.data.details}</div>
               </div>
             </Loader>
           </li>
@@ -155,9 +236,11 @@ class Complaint extends Component {
 
 const mapStateToProps = state => ({
   getAll: state.getAllComplaint,
-  get: state.getComplaint
+  get: state.getComplaint,
+  edit: state.editComplaint,
+  addComplaint: state.addComplaint,
 })
 
 export default connect(mapStateToProps, {
-  getAllComplaintAction, getComplaintAction, modalAction
+  getAllComplaintAction, getComplaintAction, modalAction, editComplaintAction
 })(Complaint)

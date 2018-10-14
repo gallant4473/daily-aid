@@ -41,3 +41,11 @@
 .hand {
   cursor: pointer;
 }
+
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.custom-spacing {
+  padding: 0.5rem 1rem;
+}

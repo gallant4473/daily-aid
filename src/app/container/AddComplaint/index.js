@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addComplaintAction, editComplaintAction, getAllComplaintAction } from '../Complaint/logic'
+import { addComplaintAction, editComplaintAction, getAllNoRefreshComplaintAction, getComplaintAction, getAllComplaintAction } from '../Complaint/logic'
 import { modalCloseAction } from '../Modal/logic'
 import { getCookie } from '../../utils'
 
@@ -12,9 +12,9 @@ class AddComplaint extends Component {
       name: this.props.data ? this.props.data.name : '',
       email: this.props.data ? this.props.data.email : '',
       number: this.props.data ? this.props.data.contact_number : '',
-      commonArea: this.props.data ? this.props.data.location.common_area : '',
-      apartment: this.props.data ? this.props.data.location.apartment : '',
-      facilities: this.props.data ? this.props.data.location.facilities : '',
+      commonArea: this.props.data ? this.props.data.location ? this.props.data.location.common_area : '' : '',
+      apartment: this.props.data ? this.props.data.location ? this.props.data.location.apartment : '' : '',
+      facilities: this.props.data ? this.props.data.location ? this.props.data.location.facilities : '' : '',
       details: this.props.data ? this.props.data.details : ''
     }
     this.onChange = this.onChange.bind(this)
@@ -30,8 +30,11 @@ class AddComplaint extends Component {
     }
     if (nextProps.edit.flag !== this.props.edit.flag && nextProps.edit.flag) {
       this.props.modalCloseAction()
-      this.props.getAllComplaintAction({
+      this.props.getAllNoRefreshComplaintAction({
         id: id.user_id
+      })
+      this.props.getComplaintAction({
+        id: this.props.data.complaint_id
       })
     }
   }
@@ -132,5 +135,5 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
-  addComplaintAction, editComplaintAction, modalCloseAction, getAllComplaintAction
+  addComplaintAction, editComplaintAction, modalCloseAction, getAllNoRefreshComplaintAction, getComplaintAction, getAllComplaintAction
 })(AddComplaint)

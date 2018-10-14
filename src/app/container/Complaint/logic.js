@@ -26,6 +26,8 @@ const GET_COMPLAINT_FAILURE = 'GET_COMPLAINT_FAILURE'
 
 const GET_ALL_COMPLAINT = 'GET_ALL_COMPLAINT'
 const GET_ALL_COMPLAINT_SUCCESS = 'GET_ALL_COMPLAINT_SUCCESS'
+const GET_ALL_COMPLAINT_NO_REFRESH = 'GET_ALL_COMPLAINT_NO_REFRESH'
+const GET_ALL_COMPLAINT_NO_REFRESH_SUCCESS = 'GET_ALL_COMPLAINT_NO_REFRESH_SUCCESS'
 const GET_ALL_COMPLAINT_FAILURE = 'GET_ALL_COMPLAINT_FAILURE'
 
 const INITIAL_STATE = {
@@ -101,6 +103,18 @@ const getAllComplaintSuccess = payload => ({
   payload
 })
 
+// Get All complaint action
+export const getAllNoRefreshComplaintAction = payload => ({
+  type: GET_ALL_COMPLAINT_NO_REFRESH,
+  payload
+})
+
+// Get All complaint Success action
+const getAllNoRefreshComplaintSuccess = payload => ({
+  type: GET_ALL_COMPLAINT_NO_REFRESH_SUCCESS,
+  payload
+})
+
 // Add complaint epic
 export const addComplaintEpic = action$ => action$
   .ofType(ADD_COMPLAINT)
@@ -158,6 +172,19 @@ export const getAllComplaintEpic = action$ => action$
   .ofType(GET_ALL_COMPLAINT)
   .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}complaints/list/${action.payload.id ? action.payload.id : ''}`, 'GET', true, {}))
     .map(response => getAllComplaintSuccess(response))
+    .catch(error => Observable.of({
+      type: GET_ALL_COMPLAINT_FAILURE,
+      payload: error
+    }, {
+      type: ERROR,
+      payload: error
+    })))
+
+// Get All no refresh complaint epic
+export const getAllNoRefreshComplaintEpic = action$ => action$
+  .ofType(GET_ALL_COMPLAINT_NO_REFRESH)
+  .mergeMap(action => staticAjax(apiCall(`${process.env.apiUrl}complaints/list/${action.payload.id ? action.payload.id : ''}`, 'GET', true, {}))
+    .map(response => getAllNoRefreshComplaintSuccess(response))
     .catch(error => Observable.of({
       type: GET_ALL_COMPLAINT_FAILURE,
       payload: error
@@ -319,6 +346,15 @@ export function getAllComplaintReducer (state = INITIAL_NEW_STATE, action) {
       }
     }
     case GET_ALL_COMPLAINT_SUCCESS: {
+      return {
+        ...state,
+        data: action.payload.response.data,
+        loading: false,
+        error: false,
+        flag: true
+      }
+    }
+    case GET_ALL_COMPLAINT_NO_REFRESH_SUCCESS: {
       return {
         ...state,
         data: action.payload.response.data,

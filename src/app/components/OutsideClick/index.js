@@ -30,14 +30,22 @@ export default class OutsideClick extends Component {
       return true;
     }
 
-    return document.querySelector(`.${this.props.listenClickWithinClass}`).contains(node)
+    const el = document.querySelector(`.${this.props.listenClickWithinClass}`)
+    if (!el) {
+      return el.contains(node)
+    }
+    return false
   }
 
   checkifClickWithinIgnoreBoundary(node) {
     if (!this.props.ignoreClickWithinClass) {
       return true;
     }
-    return !document.querySelector(`.${this.props.ignoreClickWithinClass}`).contains(node);
+    const el = document.querySelector(`.${this.props.ignoreClickWithinClass}`)
+    if (el) {
+      return !el.contains(node)
+    }
+    return false
   }
 
   handle (e) {

@@ -2,7 +2,7 @@ import { combineEpics } from 'redux-observable'
 
 import { loginEpic, logoutEpic, signupEpic, forgotPasswordEpic, checkResetEpic, resetPasswordEpic } from './Login/logic'
 import { approveEpic, activateEpic, getUserEpic } from './User/logic'
-import { getAllComplaintEpic, getComplaintEpic, deleteComplaintEpic, editComplaintEpic, addComplaintEpic } from './Complaint/logic'
+import { getAllComplaintEpic, getComplaintEpic, deleteComplaintEpic, editComplaintEpic, addComplaintEpic, getAllNoRefreshComplaintEpic } from './Complaint/logic'
 import { getAllAnnouncementEpic, getAnnouncementEpic, deleteAnnouncementEpic, editAnnouncementEpic, addAnnouncementEpic } from './Announcements/logic'
 
 const rootEpic = combineEpics(
@@ -21,6 +21,7 @@ const rootEpic = combineEpics(
   editComplaintEpic,
   addComplaintEpic,
   getAllAnnouncementEpic,
+  getAllNoRefreshComplaintEpic,
   getAnnouncementEpic,
   deleteAnnouncementEpic,
   editAnnouncementEpic,
