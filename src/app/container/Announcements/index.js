@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import Timestamp from 'react-timestamp'
 import { connect } from 'react-redux'
-import { getAllAnnouncementAction, getAnnouncementAction } from './logic'
+import { getAllAnnouncementAction, getAnnouncementAction, deleteAnnouncementAction } from './logic'
 import { modalAction } from '../Modal/logic'
 import { getCookie } from '../../utils'
 import { Loader } from '../../components'
@@ -23,6 +23,9 @@ class Announcements extends Component {
       this.setState({
         open: null
       })
+    }
+    if (nextProps.delete.flag !== this.props.delete.flag && nextProps.delete.flag) {
+      this.props.getAllAnnouncementAction()
     }
   }
   openModal (status) {
@@ -81,6 +84,9 @@ class Announcements extends Component {
             <Loader loading={data.loading} error={data.error} height={80} >
               {getCookie('permissions') === 'true' && (
                 <div className='d-flex align-items-center justify-content-end' >
+                  <button style={{ marginRight: 10 }} onClick={() => this.props.deleteAnnouncementAction({ id: item.announcement_id })} type='button' className='btn btn-danger btn-sm'>
+                    Delete
+                  </button>
                   <button onClick={() => this.openModal(true)} type='button' className='btn btn-primary btn-sm'>Edit</button>
                 </div>
               )}
@@ -123,9 +129,10 @@ class Announcements extends Component {
 
 const mapStateToProps = state => ({
   getAll: state.getAllAnnouncement,
-  get: state.getAnnouncement
+  get: state.getAnnouncement,
+  delete: state.deleteAnnouncement
 })
 
 export default connect(mapStateToProps, {
-  getAllAnnouncementAction, getAnnouncementAction, modalAction
+  getAllAnnouncementAction, getAnnouncementAction, modalAction, deleteAnnouncementAction
 })(Announcements)
